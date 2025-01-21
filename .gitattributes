@@ -1,2 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics Challenge</title>
+</head>
+<body>
+    <h1>JavaScript Basics Coding Challenge</h1>
+    <script src="cc_1.js"></script>
+</body>
+</html> 
+
+let employeeName = "Shane"; // Employee's name as a string (using let)
+const employeeID = 12345; // Employee ID as a number (using const)
+var isActive = true; // Employee active status as a boolean (using var) 
+
+console.log("Employee Name:", employeeName, "Type:", typeof employeeName);
+console.log("Employee ID:", employeeID, "Type:", typeof employeeID);
+console.log("Is Active:", isActive, "Type:", typeof isActive);
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Product {
+    int id;
+    String name;
+    String category;
+    int price;
+
+    public Product(String csv) {
+        String[] parts = csv.split(",");
+        this.id = Integer.parseInt(parts[0]);
+        this.name = parts[1];
+        this.category = parts[2];
+        this.price = Integer.parseInt(parts[3]);
+    }
+
+    public String toCsv() {
+        return id + "," + name + "," + category + "," + price;
+    }
+}
+
+public class ProductSuggestionService {
+
+    public static List<String> crosssell(List<String> purchasedProductsCsv, List<String> inventoryCsv) {
+        List<Product> purchasedProducts = purchasedProductsCsv.stream().map(Product::new).collect(Collectors.toList());
+        List<Product> inventory = inventoryCsv.stream().map(Product::new).collect(Collectors.toList());
+
+        Map<String, Integer> maxPriceByCategory = new HashMap<>();
+        for (Product product : purchasedProducts) {
+            maxPriceByCategory.merge(product.category, product.price, Math::max);
+        }
+
+        return inventory.stream()
+                .filter(product -> product.price <= maxPriceByCategory.getOrDefault(product.category, 0))
+                .sorted(Comparator.comparingInt(product -> product.price))
+                .map(Product::toCsv)
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> upsell(List<String> purchasedProductsCsv, List<String> inventoryCsv) {
+        List<Product> purchasedProducts = purchasedProductsCsv.stream().map(Product::new).collect(Collectors.toList());
+        List<Product> inventory = inventoryCsv.stream().map(Product::new).collect(Collectors.toList());
+
+        Map<String, Integer> maxPriceByCategory = new HashMap<>();
+        for (Product product : purchasedProducts) {
+            maxPriceByCategory.merge(product.category, product.price, Math::max);
+        }
+
+        return inventory.stream()
+                .filter(product -> product.price > maxPriceByCategory.getOrDefault(product.category, 0))
+                .sorted(Comparator.comparingInt(product -> product.price))
+                .map(Product::toCsv)
+                .collect(Collectors.toList());
+    }
+
+    public static void main(String[] args) {
+        List<String> purchasedProducts = Arrays.asList("1,productA,electronics,200", "2,productB,books,50");
+        List<String> inventory = Arrays.asList("3,productC,electronics,150", "4,productD,books,60", "5,productE,electronics,250", "6,productF,books,45", "7,productG,electronics,300");
+
+        System.out.println("Cross-sell suggestions:");
+        crosssell(purchasedProducts, inventory).forEach(System.out::println);
+
+        System.out.println("\nUp-sell suggestions:");
+        upsell(purchasedProducts, inventory).forEach(System.out::println);
+    }
+}
+let accountBalance = 1000; // Initial balance
+
+console.log("Initial balance:", accountBalance);
+
+// Perform arithmetic operations
+accountBalance += 500; // Deposit
+console.log("After deposit:", accountBalance);
+
+accountBalance -= 200; // Withdrawal
+console.log("After withdrawal:", accountBalance);
+
+accountBalance *= 1.05; // Apply 5% interest
+console.log("After interest:", accountBalance);
+
+accountBalance /= 2; // Divide by 2
+console.log("After division:", accountBalance);
+
+joined = str1 + ' ' + str2
+print(f'Hi, {name}!')
+
+var IsLoggedIn1 = "true"; //string
+var IsLoggedIn2 = 1; //integer
+var IsLoggedIn3 = true; //bool
 # Auto detect text files and perform LF normalization
 * text=auto
